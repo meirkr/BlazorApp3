@@ -1,44 +1,8 @@
 ﻿@page "/"
 @using System.Reactive.Linq
-@inject IStopWatchService StopWatchService;
-@implements IDisposable;
+
 <h1>Hello, world!</h1>
 
 <h2>This ap is opened for @_timeAppIsUp</h2>
 
 <SurveyPrompt Title="How is Blazor working for you?" />
-
-@code
-{
-    private string _timeAppIsUp;
-    private IDisposable _disposable;
-    
-    #region Overrides of ComponentBase
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-
-        _disposable = StopWatchService.GetTimeFromStart()
-            .Select(ts => ts.ToString())
-            .Subscribe(s =>
-            {
-                Console.WriteLine($"Arrived: {s}");
-                _timeAppIsUp = s;
-                base.StateHasChanged();
-            });
-    }
-
-    #endregion
-
-
-    #region Implementation of IDisposable
-
-    public void Dispose()
-    {
-        _disposable?.Dispose();
-    }
-
-    #endregion
-
-}
