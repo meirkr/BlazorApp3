@@ -18,6 +18,7 @@ namespace BlazorApp3
             builder.RootComponents.Add<App>("app");
 
             builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddSingleton<IStopWatchService>(sp => new StopWatchService());
 
             await builder.Build().RunAsync();
         }
